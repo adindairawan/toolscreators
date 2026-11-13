@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Shield, Sparkles, Menu, X, ArrowUpRight } from 'lucide-react';
+import { Shield, Menu, X, ArrowUpRight } from 'lucide-react';
 
 const GithubIcon = () => (
   <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
@@ -23,19 +23,14 @@ export const Navbar: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-50 apple-glass-nav border-b border-white/[0.08]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 h-12 sm:h-14 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-4 sm:px-8 h-12 sm:h-14 flex items-center justify-between">
         {/* Apple Style Brand Identity */}
-        <Link to="/" className="flex items-center gap-2.5 text-white group">
-          <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#2997ff] via-[#bf5af2] to-[#ff375f] flex items-center justify-center p-0.5 shadow-sm group-hover:scale-105 transition-transform">
-            <div className="w-full h-full bg-black rounded-full flex items-center justify-center">
-              <Sparkles className="w-3 h-3 text-[#2997ff]" />
-            </div>
+        <Link to="/" className="flex items-center gap-2 text-white group">
+          <div className="w-5 h-5 rounded-md bg-white/[0.1] border border-white/[0.15] flex items-center justify-center text-xs font-semibold text-[#f5f5f7]">
+            ⌘
           </div>
           <span className="font-semibold text-xs sm:text-sm tracking-tight text-[#f5f5f7] flex items-center gap-2">
             Creator Studio
-            <span className="hidden sm:inline-block text-[10px] font-medium tracking-normal text-[#86868b] border border-white/[0.12] px-2 py-0.5 rounded-full">
-              Pro
-            </span>
           </span>
         </Link>
 
@@ -47,10 +42,10 @@ export const Navbar: React.FC = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-3 py-1 rounded-full text-xs font-normal transition-all ${
+                className={`px-3 py-1 rounded-full text-xs transition-all ${
                   isActive
-                    ? 'text-white bg-white/[0.12] shadow-sm font-medium'
-                    : 'text-[#86868b] hover:text-[#f5f5f7] hover:bg-white/[0.05]'
+                    ? 'text-white bg-white/[0.12] font-medium'
+                    : 'text-[#86868b] hover:text-[#f5f5f7] hover:bg-white/[0.04]'
                 }`}
               >
                 {link.name}

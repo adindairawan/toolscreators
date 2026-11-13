@@ -55,7 +55,6 @@ export const CarouselSplitter: React.FC = () => {
     const targetH = mode === 'portrait' ? 1350 : 1080;
     const targetRatio = targetW / targetH;
 
-    // The total width of all slices in the source image
     const idealTotalWidthInSource = img.naturalHeight * targetRatio * count;
     const availableExtraWidth = Math.max(0, img.naturalWidth - idealTotalWidthInSource);
     const startX = (availableExtraWidth * offsetPercent) / 100;
@@ -155,7 +154,7 @@ export const CarouselSplitter: React.FC = () => {
         {slices.length > 0 && (
           <button
             onClick={downloadAllAsZip}
-            className="apple-pill-primary flex items-center gap-2 text-xs py-2 px-5 shadow-lg"
+            className="apple-btn-blue flex items-center gap-2 text-xs py-2 px-5 shadow-lg"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Download {slices.length} Slides (.ZIP)</span>
@@ -168,14 +167,14 @@ export const CarouselSplitter: React.FC = () => {
           onClick={() => fileInputRef.current?.click()}
           className="apple-bento-card p-16 sm:p-20 flex flex-col items-center justify-center text-center cursor-pointer hover:border-white/[0.2] transition-all group"
         >
-          <div className="w-16 h-16 rounded-3xl bg-white/[0.06] border border-white/[0.1] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-            <Layers className="w-7 h-7 text-[#bf5af2]" />
+          <div className="w-16 h-16 rounded-2xl bg-white/[0.06] border border-white/[0.1] flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
+            <Layers className="w-7 h-7 text-[#2997ff]" />
           </div>
-          <h3 className="text-xl sm:text-2xl font-bold text-[#f5f5f7] tracking-tight">
+          <h3 className="text-xl sm:text-2xl font-semibold text-[#f5f5f7] tracking-tight">
             Drop Panoramic Banner or Infographic
           </h3>
           <p className="text-xs sm:text-sm text-[#86868b] max-w-md mt-2 leading-relaxed">
-            Upload an ultra-wide canvas (e.g. 3240×1080 or 5400×1350). The browser slices it into seamless swipe cards with 100% loss-free clarity.
+            Upload an ultra-wide canvas (e.g. 3240×1080 or 5400×1350). Slices into seamless swipe cards with 100% loss-free clarity.
           </p>
           <div className="mt-6 flex items-center gap-2 text-[11px] text-[#30d158] bg-white/[0.04] border border-white/[0.08] px-3.5 py-1.5 rounded-full">
             <span>Instant Client ZIP Export</span>
@@ -210,7 +209,7 @@ export const CarouselSplitter: React.FC = () => {
                 step="1"
                 value={slideCount}
                 onChange={(e) => handleSlideCountChange(parseInt(e.target.value))}
-                className="w-full accent-[#2997ff] cursor-pointer"
+                className="w-full accent-[#0071e3] cursor-pointer"
               />
               <div className="flex justify-between text-[10px] text-[#86868b] font-mono">
                 <span>2 slides</span>
@@ -223,7 +222,7 @@ export const CarouselSplitter: React.FC = () => {
             <div className="space-y-2">
               <div className="flex justify-between text-xs text-[#f5f5f7]">
                 <span className="flex items-center gap-1.5 font-medium">
-                  <MoveHorizontal className="w-3.5 h-3.5 text-[#bf5af2]" />
+                  <MoveHorizontal className="w-3.5 h-3.5 text-[#2997ff]" />
                   <span>Horizontal Crop Shift:</span>
                 </span>
                 <span className="font-mono text-[#86868b]">{horizontalOffset}%</span>
@@ -235,7 +234,7 @@ export const CarouselSplitter: React.FC = () => {
                 step="1"
                 value={horizontalOffset}
                 onChange={(e) => handleOffsetChange(parseInt(e.target.value))}
-                className="w-full accent-[#bf5af2] cursor-pointer"
+                className="w-full accent-[#0071e3] cursor-pointer"
               />
               <div className="flex justify-between text-[10px] text-[#86868b] font-mono">
                 <span>Left Aligned</span>
@@ -246,22 +245,22 @@ export const CarouselSplitter: React.FC = () => {
           </div>
 
           {/* Generated Slices Grid */}
-          <div className="p-6 bg-zinc-900/60 border border-zinc-800 rounded-3xl">
+          <div className="p-6 apple-glass rounded-[24px]">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <Grid className="w-4 h-4 text-purple-400" />
-                <h3 className="text-sm font-semibold text-zinc-200">
+                <Grid className="w-4 h-4 text-[#2997ff]" />
+                <h3 className="text-sm font-semibold text-[#f5f5f7]">
                   {slices.length} Seamless Slide Previews
                 </h3>
                 {originalDimensions && (
-                  <span className="text-[11px] font-mono text-zinc-500">
+                  <span className="text-[11px] font-mono text-[#86868b]">
                     ({originalDimensions.width}×{originalDimensions.height}px Source)
                   </span>
                 )}
               </div>
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="text-xs text-purple-400 hover:text-purple-300 flex items-center gap-1 transition-colors"
+                className="text-xs text-[#2997ff] hover:underline flex items-center gap-1 transition-colors"
               >
                 <RotateCcw className="w-3 h-3" />
                 <span>Upload New Image</span>
@@ -272,14 +271,14 @@ export const CarouselSplitter: React.FC = () => {
               {slices.map((slice) => (
                 <div
                   key={slice.index}
-                  className="group relative bg-zinc-950 rounded-2xl overflow-hidden border border-zinc-800 shadow-lg"
+                  className="group relative bg-[#1c1c1e] rounded-xl overflow-hidden border border-white/[0.08] shadow-md"
                 >
                   <img
                     src={slice.dataUrl}
                     alt={`Slide ${slice.index}`}
                     className="w-full h-auto object-cover"
                   />
-                  <div className="absolute top-2 left-2 px-2 py-0.5 bg-black/75 backdrop-blur text-[10px] font-mono rounded text-zinc-200">
+                  <div className="absolute top-2 left-2 px-2 py-0.5 bg-black/80 backdrop-blur text-[10px] font-mono rounded text-[#f5f5f7]">
                     Slide {slice.index}
                   </div>
                   <a

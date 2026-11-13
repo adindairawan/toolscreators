@@ -1,23 +1,37 @@
 @import "tailwindcss";
 
+/* Apple Human Interface Guidelines (HIG) Web Tokens */
 :root {
   color-scheme: dark;
+  
+  /* Apple HIG Semantic Backgrounds */
   --apple-bg: #000000;
-  --apple-card: rgba(22, 22, 24, 0.72);
-  --apple-card-hover: rgba(30, 30, 34, 0.85);
-  --apple-border: rgba(255, 255, 255, 0.09);
-  --apple-border-specular: rgba(255, 255, 255, 0.18);
-  --apple-blue: #2997ff;
-  --apple-purple: #bf5af2;
-  --apple-pink: #ff375f;
+  --apple-card: rgba(28, 28, 30, 0.75);
+  --apple-card-hover: rgba(38, 38, 42, 0.85);
+  --apple-grouped: #1c1c1e;
+  --apple-secondary-grouped: #161617;
+  
+  /* Apple HIG Hairline & Separator Borders */
+  --apple-border: rgba(255, 255, 255, 0.08);
+  --apple-border-specular: rgba(255, 255, 255, 0.16);
+  --apple-separator: rgba(255, 255, 255, 0.06);
+
+  /* Apple HIG System Accents (NO PURPLE) */
+  --apple-blue: #0071e3;
+  --apple-blue-hover: #0077ed;
+  --apple-blue-dark: #2997ff;
+  --apple-green: #30d158;
+  --apple-orange: #ff9f0a;
+  
+  /* Apple HIG Label Hierarchy */
   --apple-text-primary: #f5f5f7;
   --apple-text-secondary: #86868b;
   --apple-text-tertiary: #6e6e73;
 
-  /* Modern web guidance: native scrollbar theming */
+  /* Modern Web Guidance native scrollbar & accent theming */
   scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
   scrollbar-width: thin;
-  accent-color: #2997ff;
+  accent-color: var(--apple-blue);
 }
 
 @layer base {
@@ -30,7 +44,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
-    selection-background-color: rgba(41, 151, 255, 0.28);
+    selection-background-color: rgba(0, 113, 227, 0.3);
     selection-color: #ffffff;
   }
 }
@@ -38,110 +52,128 @@
 /* Apple Liquid Glass Acrylic Surface */
 .apple-glass {
   background: var(--apple-card);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid var(--apple-border);
-  box-shadow: 
-    0 1px 2px rgba(0, 0, 0, 0.2),
-    0 12px 36px -4px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
-}
-
-.apple-glass-nav {
-  background: rgba(0, 0, 0, 0.78);
-  backdrop-filter: blur(20px) saturate(190%);
-  -webkit-backdrop-filter: blur(20px) saturate(190%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* Apple Floating Bento Card */
-.apple-bento-card {
-  position: relative;
-  background: linear-gradient(135deg, rgba(28, 28, 30, 0.65) 0%, rgba(18, 18, 20, 0.85) 100%);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid var(--apple-border);
-  border-radius: 28px;
   box-shadow: 
-    0 4px 12px rgba(0, 0, 0, 0.25),
-    0 24px 48px -12px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 16px 36px -8px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+}
+
+.apple-glass-nav {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--apple-border);
+}
+
+/* Apple Bento Card */
+.apple-bento-card {
+  position: relative;
+  background: linear-gradient(180deg, rgba(28, 28, 30, 0.7) 0%, rgba(20, 20, 22, 0.85) 100%);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--apple-border);
+  border-radius: 22px;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 20px 40px -12px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 /* Modern Web Guidance: Opt in to spatial motion only if user has no reduced motion preference */
 @media (prefers-reduced-motion: no-preference) {
   .apple-bento-card:hover {
-    transform: translateY(-4px) scale(1.008);
+    transform: translateY(-3px);
     border-color: var(--apple-border-specular);
     box-shadow: 
-      0 12px 28px rgba(0, 0, 0, 0.35),
-      0 36px 64px -16px rgba(0, 0, 0, 0.65),
-      inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      0 10px 24px rgba(0, 0, 0, 0.4),
+      0 28px 56px -14px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16);
   }
 }
 
-/* Apple Typography & Gradient Sheens */
-.apple-gradient-text {
-  background: linear-gradient(180deg, #ffffff 20%, #a1a1a6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
+/* Apple Pure Typography Gradient */
 .apple-gradient-hero {
-  background: linear-gradient(135deg, #ffffff 0%, #d2d2d7 45%, #86868b 100%);
+  background: linear-gradient(180deg, #ffffff 30%, #a1a1a6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.apple-gradient-accent {
-  background: linear-gradient(135deg, #2997ff 0%, #bf5af2 50%, #ff375f 100%);
+.apple-gradient-subtle {
+  background: linear-gradient(180deg, #f5f5f7 0%, #86868b 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Apple Rounded Pill Button */
+/* Apple HIG Primary Action Pill (Apple Blue) */
+.apple-btn-blue {
+  background-color: var(--apple-blue);
+  color: #ffffff;
+  border-radius: 980px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  padding: 8px 18px;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+.apple-btn-blue:hover {
+  background-color: var(--apple-blue-hover);
+}
+.apple-btn-blue:active {
+  transform: scale(0.98);
+}
+
+/* Apple HIG White Pill */
 .apple-pill-primary {
-  background: #ffffff;
-  color: #000000;
+  background: #f5f5f7;
+  color: #1d1d1f;
   border-radius: 980px;
   font-weight: 500;
   font-size: 13px;
   letter-spacing: -0.01em;
   padding: 8px 18px;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.15s ease, transform 0.15s ease;
 }
 .apple-pill-primary:hover {
-  opacity: 0.88;
+  opacity: 0.9;
 }
 .apple-pill-primary:active {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 
+/* Apple HIG Translucent Secondary Pill */
 .apple-pill-secondary {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
   color: #f5f5f7;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 980px;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   padding: 8px 18px;
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
 }
 .apple-pill-secondary:hover {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 .apple-pill-secondary:active {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 
-/* Subtle Apple Ambient Glow */
-.apple-glow-radial {
-  position: absolute;
-  pointer-events: none;
-  border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.16;
-  z-index: 0;
+/* Apple HIG Blue Link */
+.apple-link {
+  color: var(--apple-blue-dark);
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: opacity 0.15s ease;
+}
+.apple-link:hover {
+  text-decoration: underline;
+  opacity: 0.9;
 }

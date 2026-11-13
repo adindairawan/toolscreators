@@ -40,7 +40,7 @@ export const DimensionsCheatSheet: React.FC = () => {
 
         <div className="apple-bento-card p-6 flex flex-col justify-between">
           <div>
-            <div className="w-10 h-10 rounded-2xl bg-white/[0.08] border border-white/[0.12] flex items-center justify-center mb-4 text-[#bf5af2]">
+            <div className="w-10 h-10 rounded-2xl bg-white/[0.08] border border-white/[0.12] flex items-center justify-center mb-4 text-[#f5f5f7]">
               <Sparkles className="w-5 h-5" />
             </div>
             <h4 className="text-sm font-semibold text-[#f5f5f7]">NLE Editor Precision</h4>
@@ -48,8 +48,8 @@ export const DimensionsCheatSheet: React.FC = () => {
               Engineered specifically for Premiere Pro, Final Cut Pro, DaVinci Resolve, and CapCut editors needing exact pixel bounds for TikTok, Reels & Shorts.
             </p>
           </div>
-          <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center gap-1.5 text-[11px] text-[#bf5af2]">
-            <CheckCircle className="w-3.5 h-3.5" />
+          <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center gap-1.5 text-[11px] text-[#86868b]">
+            <CheckCircle className="w-3.5 h-3.5 text-[#30d158]" />
             <span>1080×1920 native output</span>
           </div>
         </div>

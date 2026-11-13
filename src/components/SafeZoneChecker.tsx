@@ -205,9 +205,9 @@ export const SafeZoneChecker: React.FC<SafeZoneCheckerProps> = ({ initialPlatfor
 
           <button
             onClick={exportOverlayPNG}
-            className="apple-pill-primary flex items-center gap-1.5 text-xs py-1.5 px-4"
+            className="apple-btn-blue flex items-center gap-1.5 text-xs py-1.5 px-4"
           >
-            <Download className="w-3 h-3" />
+            <Download className="w-3.5 h-3.5" />
             <span>Export 1080×1920 PNG</span>
           </button>
         </div>
@@ -215,12 +215,12 @@ export const SafeZoneChecker: React.FC<SafeZoneCheckerProps> = ({ initialPlatfor
 
       {/* Advanced Customization Drawer */}
       {showAdvanced && (
-        <div className="p-4 bg-zinc-900/90 border border-zinc-800 rounded-2xl grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs text-zinc-300 animate-fadeIn">
+        <div className="p-5 apple-bento-card grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs text-[#f5f5f7]">
           {/* Opacity slider */}
           <div className="space-y-1.5">
-            <div className="flex justify-between text-zinc-400">
+            <div className="flex justify-between text-[#86868b]">
               <span>Overlay Opacity</span>
-              <span className="font-mono text-purple-400">{Math.round(overlayOpacity * 100)}%</span>
+              <span className="font-mono text-[#2997ff]">{Math.round(overlayOpacity * 100)}%</span>
             </div>
             <input
               type="range"
@@ -229,13 +229,13 @@ export const SafeZoneChecker: React.FC<SafeZoneCheckerProps> = ({ initialPlatfor
               step="0.05"
               value={overlayOpacity}
               onChange={(e) => setOverlayOpacity(parseFloat(e.target.value))}
-              className="w-full accent-purple-500 cursor-pointer"
+              className="w-full accent-[#0071e3] cursor-pointer"
             />
           </div>
 
           {/* Color contrast selector */}
           <div className="space-y-1.5">
-            <span className="text-zinc-400 flex items-center gap-1.5">
+            <span className="text-[#86868b] flex items-center gap-1.5">
               <Palette className="w-3.5 h-3.5" />
               <span>Guide Color Contrast</span>
             </span>
@@ -245,10 +245,11 @@ export const SafeZoneChecker: React.FC<SafeZoneCheckerProps> = ({ initialPlatfor
                   key={col.name}
                   onClick={() => setSelectedColorIndex(idx)}
                   className={`w-6 h-6 rounded-full border-2 transition-transform ${
-                    selectedColorIndex === idx ? 'scale-125 border-white' : 'border-transparent'
+                    selectedColorIndex === idx ? 'scale-125 border-white shadow-md' : 'border-transparent'
                   }`}
                   style={{ backgroundColor: col.value }}
                   title={col.name}
+                  aria-label={`Select ${col.name} guide color`}
                 />
               ))}
             </div>
@@ -256,9 +257,9 @@ export const SafeZoneChecker: React.FC<SafeZoneCheckerProps> = ({ initialPlatfor
 
           {/* Extra bottom margin */}
           <div className="space-y-1.5">
-            <div className="flex justify-between text-zinc-400">
+            <div className="flex justify-between text-[#86868b]">
               <span>Caption Padding Offset</span>
-              <span className="font-mono text-purple-400">+{extraBottomMargin * 5}px</span>
+              <span className="font-mono text-[#2997ff]">+{extraBottomMargin * 5}px</span>
             </div>
             <input
               type="range"
@@ -267,7 +268,7 @@ export const SafeZoneChecker: React.FC<SafeZoneCheckerProps> = ({ initialPlatfor
               step="1"
               value={extraBottomMargin}
               onChange={(e) => setExtraBottomMargin(parseInt(e.target.value))}
-              className="w-full accent-purple-500 cursor-pointer"
+              className="w-full accent-[#0071e3] cursor-pointer"
             />
           </div>
         </div>

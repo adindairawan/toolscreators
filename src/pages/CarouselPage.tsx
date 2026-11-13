@@ -15,7 +15,7 @@ export const CarouselPage: React.FC = () => {
 
       {/* Header */}
       <div className="max-w-3xl pt-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.12] text-[11px] text-[#bf5af2] font-medium mb-4">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.12] text-[11px] text-[#2997ff] font-medium mb-4">
           <span>Seamless Canvas Studio</span>
           <span className="text-[#6e6e73]">•</span>
           <span className="text-[#30d158] flex items-center gap-1">
@@ -37,7 +37,7 @@ export const CarouselPage: React.FC = () => {
       {/* Informational SEO Guide */}
       <div className="apple-glass rounded-[32px] p-8 sm:p-10 space-y-6">
         <h2 className="text-xl font-bold text-[#f5f5f7] tracking-tight flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-[#bf5af2]" />
+          <Sparkles className="w-4 h-4 text-[#2997ff]" />
           How to Create High-Engagement Seamless Carousels
         </h2>
 
