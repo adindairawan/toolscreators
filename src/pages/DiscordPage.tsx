@@ -13,19 +13,19 @@ export const DiscordPage: React.FC = () => {
       />
 
       {/* Header */}
-      <div className="max-w-3xl">
-        <div className="flex items-center gap-2 text-xs text-purple-400 font-semibold mb-2">
-          <span>COMMUNITY & EVENT UTILITY</span>
-          <span>•</span>
-          <span className="text-emerald-400 flex items-center gap-1">
+      <div className="max-w-3xl pt-4">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.12] text-[11px] text-[#ff375f] font-medium mb-4">
+          <span>Global Time Sync Studio</span>
+          <span className="text-[#6e6e73]">•</span>
+          <span className="text-[#30d158] flex items-center gap-1">
             <ShieldCheck className="w-3.5 h-3.5" />
-            Automatic Global Timezone Translation
+            Automatic Local Device Timezone
           </span>
         </div>
-        <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-          Discord Dynamic Timestamp Generator
+        <h1 className="text-3xl sm:text-5xl font-extrabold text-[#f5f5f7] tracking-tight leading-tight">
+          Discord Dynamic Timestamps
         </h1>
-        <p className="mt-2 text-sm text-zinc-400 leading-relaxed">
+        <p className="mt-3 text-sm sm:text-base text-[#86868b] leading-relaxed">
           Select an event date and time in your local clock. Discord markdown timestamps automatically translate into every server member's personal device timezone and render live relative countdowns (e.g. "in 3 hours").
         </p>
       </div>
@@ -34,17 +34,17 @@ export const DiscordPage: React.FC = () => {
       <DiscordTimestamp />
 
       {/* Discord Markdown Timestamp Cheatsheet */}
-      <div className="p-8 bg-zinc-900/50 border border-zinc-800 rounded-3xl space-y-6">
-        <h2 className="text-lg font-bold text-white flex items-center gap-2">
-          <MessageSquareCode className="w-4 h-4 text-purple-400" />
+      <div className="apple-glass rounded-[32px] p-8 sm:p-10 space-y-6">
+        <h2 className="text-xl font-bold text-[#f5f5f7] tracking-tight flex items-center gap-2">
+          <MessageSquareCode className="w-4 h-4 text-[#ff375f]" />
           How Discord Timestamps Work
         </h2>
 
-        <div className="space-y-4 text-xs text-zinc-400 leading-relaxed">
+        <div className="space-y-4 text-xs text-[#86868b] leading-relaxed">
           <p>
             Instead of typing ambiguous dates like <em>"meeting at 5 PM EST"</em> which forces global members to use Google converters, Discord supports native UNIX epoch timestamp markdown tags formatted as:
           </p>
-          <div className="p-4 bg-zinc-950 font-mono text-purple-300 rounded-xl border border-zinc-800/80">
+          <div className="p-4 bg-white/[0.04] font-mono text-[#2997ff] rounded-2xl border border-white/[0.08]">
             &lt;t:UNIX_TIMESTAMP:FLAG&gt;
           </div>
           <p>

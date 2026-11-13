@@ -164,17 +164,17 @@ export const SafeZoneChecker: React.FC<SafeZoneCheckerProps> = ({ initialPlatfor
   return (
     <div className="space-y-6">
       {/* Top Controls Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-2xl">
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mr-1">Platform:</span>
+      <div className="flex flex-wrap items-center justify-between gap-4 p-4 apple-glass rounded-2xl">
+        <div className="flex items-center gap-1.5 bg-black/40 p-1 rounded-full border border-white/[0.08]">
+          <span className="text-[11px] font-medium text-[#86868b] px-3">Platform</span>
           {(Object.keys(PLATFORMS) as Platform[]).map((p) => (
             <button
               key={p}
               onClick={() => setPlatform(p)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-xl transition-all ${
+              className={`px-3 py-1 text-xs rounded-full transition-all ${
                 platform === p
-                  ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30'
-                  : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700'
+                  ? 'bg-white text-black font-semibold shadow-sm'
+                  : 'text-[#86868b] hover:text-[#f5f5f7]'
               }`}
             >
               {PLATFORMS[p].name}
@@ -182,32 +182,32 @@ export const SafeZoneChecker: React.FC<SafeZoneCheckerProps> = ({ initialPlatfor
           ))}
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <button
             onClick={() => setShowAdvanced(!showAdvanced)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-xl border transition-colors ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full border transition-all ${
               showAdvanced
-                ? 'bg-purple-600/20 text-purple-300 border-purple-500/40'
-                : 'bg-zinc-800 text-zinc-300 border-zinc-700 hover:bg-zinc-700'
+                ? 'bg-white/[0.15] text-white border-white/[0.2]'
+                : 'bg-white/[0.05] text-[#86868b] border-white/[0.08] hover:text-[#f5f5f7]'
             }`}
           >
-            <Sliders className="w-3.5 h-3.5" />
-            <span>Customize Guides</span>
+            <Sliders className="w-3 h-3 text-[#2997ff]" />
+            <span>Customize</span>
           </button>
 
           <button
             onClick={() => setShowOverlay(!showOverlay)}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-xl text-zinc-200"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.08] rounded-full text-[#86868b] hover:text-[#f5f5f7] transition-colors"
           >
-            {showOverlay ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+            {showOverlay ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
             <span>{showOverlay ? 'Hide Guides' : 'Show Guides'}</span>
           </button>
 
           <button
             onClick={exportOverlayPNG}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-xl shadow-lg shadow-purple-600/25 transition-all"
+            className="apple-pill-primary flex items-center gap-1.5 text-xs py-1.5 px-4"
           >
-            <Download className="w-3.5 h-3.5" />
+            <Download className="w-3 h-3" />
             <span>Export 1080×1920 PNG</span>
           </button>
         </div>
@@ -274,11 +274,17 @@ export const SafeZoneChecker: React.FC<SafeZoneCheckerProps> = ({ initialPlatfor
       )}
 
       {/* Main Preview Area */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Phone Mockup Canvas Viewport */}
-        <div className="lg:col-span-8 flex flex-col items-center justify-center p-6 bg-zinc-900/60 border border-zinc-800/80 rounded-3xl min-h-[580px]">
-          {/* Phone Frame Simulator (Aspect Ratio 9:16) */}
-          <div className="relative w-full max-w-[340px] aspect-[9/16] bg-black rounded-3xl overflow-hidden shadow-2xl border-4 border-zinc-800 flex items-center justify-center select-none">
+        <div className="lg:col-span-8 flex flex-col items-center justify-center p-6 sm:p-10 apple-glass rounded-[32px] min-h-[620px]">
+          {/* Apple iPhone Pro Bezel Simulator (Aspect Ratio 9:16) */}
+          <div className="relative w-full max-w-[340px] aspect-[9/16] bg-black rounded-[44px] overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] border-[5px] border-[#38383a] ring-1 ring-white/10 flex items-center justify-center select-none">
+            {/* Dynamic Island Notch */}
+            <div className="absolute top-2.5 inset-x-0 mx-auto w-24 h-6 bg-black rounded-full border border-white/10 z-30 flex items-center justify-between px-2.5 pointer-events-none">
+              <div className="w-2.5 h-2.5 rounded-full bg-[#1c1c1e] ring-1 ring-white/5" />
+              <div className="w-2 h-2 rounded-full bg-[#0a84ff]/60" />
+            </div>
+
             {mediaSrc ? (
               mediaType === 'video' ? (
                 <video
@@ -300,11 +306,13 @@ export const SafeZoneChecker: React.FC<SafeZoneCheckerProps> = ({ initialPlatfor
             ) : (
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="flex flex-col items-center justify-center p-6 text-center cursor-pointer hover:bg-zinc-900/50 transition-colors h-full w-full border-2 border-dashed border-zinc-700/60 rounded-2xl m-3"
+                className="flex flex-col items-center justify-center p-6 text-center cursor-pointer hover:bg-white/[0.04] transition-colors h-full w-full border-2 border-dashed border-white/10 rounded-[32px] m-3"
               >
-                <Upload className="w-10 h-10 text-purple-400 mb-3 animate-pulse" />
-                <p className="text-sm font-semibold text-zinc-200">Drop MP4, MOV, or PNG here</p>
-                <p className="text-xs text-zinc-500 mt-1">100% Client-Side. Instant preview.</p>
+                <div className="w-12 h-12 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center mb-3">
+                  <Upload className="w-5 h-5 text-[#2997ff]" />
+                </div>
+                <p className="text-sm font-semibold text-[#f5f5f7]">Drop MP4, MOV, or PNG</p>
+                <p className="text-[11px] text-[#86868b] mt-1">100% In-Memory Preview</p>
               </div>
             )}
 
@@ -457,10 +465,11 @@ export const SafeZoneChecker: React.FC<SafeZoneCheckerProps> = ({ initialPlatfor
               <div className="flex items-center gap-3">
                 <button
                   onClick={togglePlay}
-                  className="p-2 bg-purple-600 hover:bg-purple-500 rounded-xl text-white transition-colors"
+                  className="p-2 bg-white text-black hover:opacity-90 rounded-full transition-opacity shadow-sm"
                   title="Spacebar to toggle"
+                  aria-label={isPlaying ? 'Pause video' : 'Play video'}
                 >
-                  {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                  {isPlaying ? <Pause className="w-3.5 h-3.5 fill-current" /> : <Play className="w-3.5 h-3.5 fill-current ml-0.5" />}
                 </button>
                 <input
                   type="range"
@@ -475,12 +484,12 @@ export const SafeZoneChecker: React.FC<SafeZoneCheckerProps> = ({ initialPlatfor
                       setCurrentTime(time);
                     }
                   }}
-                  className="w-full accent-purple-500 cursor-pointer"
+                  className="w-full accent-[#2997ff] cursor-pointer"
                 />
               </div>
-              <div className="flex justify-between text-[11px] text-zinc-400 font-mono">
+              <div className="flex justify-between text-[11px] text-[#86868b] font-mono">
                 <span>{currentTime.toFixed(1)}s / {duration.toFixed(1)}s</span>
-                <span>[Space] Play • [←/→] Frame Step</span>
+                <span>[Space] Play • [←/→] Step</span>
               </div>
             </div>
           )}
@@ -496,21 +505,21 @@ export const SafeZoneChecker: React.FC<SafeZoneCheckerProps> = ({ initialPlatfor
 
         {/* Side Panel Controls & Guide */}
         <div className="lg:col-span-4 space-y-4">
-          <div className="p-5 bg-zinc-900/60 border border-zinc-800 rounded-3xl">
-            <h3 className="text-sm font-semibold text-zinc-200 flex items-center gap-2">
-              <Upload className="w-4 h-4 text-purple-400" />
-              Upload Video / Image
+          <div className="apple-bento-card p-6">
+            <h3 className="text-sm font-semibold text-[#f5f5f7] flex items-center gap-2">
+              <Upload className="w-4 h-4 text-[#2997ff]" />
+              Source Material
             </h3>
-            <p className="text-xs text-zinc-400 mt-1.5 leading-relaxed">
-              Drop an MP4, MOV, or PNG file. Rendered entirely in your browser memory.
+            <p className="text-xs text-[#86868b] mt-1.5 leading-relaxed">
+              Drop any vertical video (MP4/MOV) or thumbnail (1080×1920). Instant client playback.
             </p>
 
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="mt-4 w-full py-2.5 px-4 bg-purple-600 hover:bg-purple-500 font-medium text-xs rounded-xl text-white shadow-lg shadow-purple-600/20 transition-all flex items-center justify-center gap-2"
+              className="mt-5 w-full apple-pill-primary py-2.5 flex items-center justify-center gap-2 text-xs"
             >
               <Upload className="w-4 h-4" />
-              <span>Choose Local File</span>
+              <span>Choose From Device</span>
             </button>
 
             {mediaSrc && (
@@ -519,36 +528,36 @@ export const SafeZoneChecker: React.FC<SafeZoneCheckerProps> = ({ initialPlatfor
                   setMediaSrc(null);
                   setMediaType(null);
                 }}
-                className="mt-2 w-full py-1.5 text-xs text-zinc-400 hover:text-zinc-200 flex items-center justify-center gap-1.5"
+                className="mt-3 w-full py-1 text-xs text-[#86868b] hover:text-white flex items-center justify-center gap-1.5 transition-colors"
               >
-                <RotateCcw className="w-3.5 h-3.5" />
-                <span>Remove File</span>
+                <RotateCcw className="w-3 h-3" />
+                <span>Remove Media</span>
               </button>
             )}
           </div>
 
-          <div className="p-5 bg-zinc-900/60 border border-zinc-800 rounded-3xl">
-            <h3 className="text-sm font-semibold text-zinc-200">Pixel Safe Margins (1080×1920)</h3>
-            <div className="mt-3 space-y-2 text-xs text-zinc-400 font-mono">
-              <div className="flex justify-between pb-1.5 border-b border-zinc-800">
-                <span>Top Danger Header</span>
-                <span className="text-zinc-200">{PLATFORMS[platform].topDanger} px</span>
+          <div className="apple-bento-card p-6">
+            <h3 className="text-sm font-semibold text-[#f5f5f7]">Safe Margin Specifications</h3>
+            <div className="mt-4 space-y-2.5 text-xs text-[#86868b] font-mono">
+              <div className="flex justify-between pb-2 border-b border-white/[0.06]">
+                <span>Top Margin</span>
+                <span className="text-[#f5f5f7]">{PLATFORMS[platform].topDanger} px</span>
               </div>
-              <div className="flex justify-between pb-1.5 border-b border-zinc-800">
-                <span>Right Action Rail</span>
-                <span className="text-zinc-200">{PLATFORMS[platform].rightDanger} px</span>
+              <div className="flex justify-between pb-2 border-b border-white/[0.06]">
+                <span>Right Actions</span>
+                <span className="text-[#f5f5f7]">{PLATFORMS[platform].rightDanger} px</span>
               </div>
               <div className="flex justify-between">
-                <span>Bottom Caption Zone</span>
-                <span className="text-zinc-200">{PLATFORMS[platform].bottomDanger + (extraBottomMargin * 5)} px</span>
+                <span>Bottom Caption</span>
+                <span className="text-[#f5f5f7]">{PLATFORMS[platform].bottomDanger + (extraBottomMargin * 5)} px</span>
               </div>
             </div>
           </div>
 
-          <div className="p-4 bg-purple-950/20 border border-purple-800/30 rounded-3xl">
-            <span className="text-xs font-semibold text-purple-300">💡 Video Editor Workflow</span>
-            <p className="text-[11px] text-zinc-300 mt-1 leading-relaxed">
-              Click <strong>Export 1080×1920 PNG</strong> and place it above your timeline in Premiere Pro, CapCut, or DaVinci. Keep subtitles inside the guide rectangle!
+          <div className="p-4 bg-white/[0.03] border border-white/[0.08] rounded-2xl">
+            <span className="text-xs font-semibold text-[#2997ff]">Editor Workflow</span>
+            <p className="text-[11px] text-[#86868b] mt-1 leading-relaxed">
+              Export the 1080×1920 PNG guide and lock it on the top track in Final Cut Pro, Premiere, or CapCut for zero-guesswork positioning.
             </p>
           </div>
         </div>

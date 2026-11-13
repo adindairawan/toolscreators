@@ -127,25 +127,25 @@ export const CarouselSplitter: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Top Controls Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-2xl">
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mr-1">Target Format:</span>
+      <div className="flex flex-wrap items-center justify-between gap-4 p-4 apple-glass rounded-2xl">
+        <div className="flex items-center gap-1.5 bg-black/40 p-1 rounded-full border border-white/[0.08]">
+          <span className="text-[11px] font-medium text-[#86868b] px-3">Format</span>
           <button
             onClick={() => handleModeChange('portrait')}
-            className={`px-3 py-1.5 text-xs font-medium rounded-xl transition-all ${
+            className={`px-3.5 py-1 text-xs rounded-full transition-all ${
               aspectMode === 'portrait'
-                ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30'
-                : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700'
+                ? 'bg-white text-black font-semibold shadow-sm'
+                : 'text-[#86868b] hover:text-[#f5f5f7]'
             }`}
           >
             4:5 Portrait (1080×1350)
           </button>
           <button
             onClick={() => handleModeChange('square')}
-            className={`px-3 py-1.5 text-xs font-medium rounded-xl transition-all ${
+            className={`px-3.5 py-1 text-xs rounded-full transition-all ${
               aspectMode === 'square'
-                ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30'
-                : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700'
+                ? 'bg-white text-black font-semibold shadow-sm'
+                : 'text-[#86868b] hover:text-[#f5f5f7]'
             }`}
           >
             1:1 Square (1080×1080)
@@ -155,10 +155,10 @@ export const CarouselSplitter: React.FC = () => {
         {slices.length > 0 && (
           <button
             onClick={downloadAllAsZip}
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-xl text-xs font-medium shadow-lg shadow-purple-600/25 transition-all"
+            className="apple-pill-primary flex items-center gap-2 text-xs py-2 px-5 shadow-lg"
           >
             <Download className="w-3.5 h-3.5" />
-            <span>Download All ({slices.length} Slides ZIP)</span>
+            <span>Download {slices.length} Slides (.ZIP)</span>
           </button>
         )}
       </div>
@@ -166,18 +166,20 @@ export const CarouselSplitter: React.FC = () => {
       {!imageSrc ? (
         <div
           onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-zinc-800 hover:border-purple-500/50 rounded-3xl p-16 flex flex-col items-center justify-center text-center cursor-pointer bg-zinc-900/30 hover:bg-zinc-900/60 transition-all"
+          className="apple-bento-card p-16 sm:p-20 flex flex-col items-center justify-center text-center cursor-pointer hover:border-white/[0.2] transition-all group"
         >
-          <div className="p-4 bg-purple-600/10 text-purple-400 rounded-2xl mb-4">
-            <Layers className="w-10 h-10" />
+          <div className="w-16 h-16 rounded-3xl bg-white/[0.06] border border-white/[0.1] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <Layers className="w-7 h-7 text-[#bf5af2]" />
           </div>
-          <h3 className="text-base font-semibold text-zinc-200">Upload Panoramic Banner or Infographic</h3>
-          <p className="text-xs text-zinc-400 max-w-md mt-1.5 leading-relaxed">
-            Drop your wide canvas (e.g. 3240×1080 or 5400×1350). We will split it into seamless, swipable Instagram/LinkedIn cards with zero compression or watermarks.
+          <h3 className="text-xl sm:text-2xl font-bold text-[#f5f5f7] tracking-tight">
+            Drop Panoramic Banner or Infographic
+          </h3>
+          <p className="text-xs sm:text-sm text-[#86868b] max-w-md mt-2 leading-relaxed">
+            Upload an ultra-wide canvas (e.g. 3240×1080 or 5400×1350). The browser slices it into seamless swipe cards with 100% loss-free clarity.
           </p>
-          <span className="mt-4 px-3 py-1 text-[11px] bg-zinc-800 text-zinc-300 rounded-full">
-            100% Client-Side • Instant ZIP Export
-          </span>
+          <div className="mt-6 flex items-center gap-2 text-[11px] text-[#30d158] bg-white/[0.04] border border-white/[0.08] px-3.5 py-1.5 rounded-full">
+            <span>Instant Client ZIP Export</span>
+          </div>
           <input
             ref={fileInputRef}
             type="file"
@@ -189,15 +191,15 @@ export const CarouselSplitter: React.FC = () => {
       ) : (
         <div className="space-y-6">
           {/* Sliders Control Panel */}
-          <div className="p-5 bg-zinc-900/80 border border-zinc-800 rounded-2xl grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-6 apple-bento-card grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Slide Count Slider (2 to 10) */}
             <div className="space-y-2">
-              <div className="flex justify-between text-xs text-zinc-300">
+              <div className="flex justify-between text-xs text-[#f5f5f7]">
                 <span className="flex items-center gap-1.5 font-medium">
-                  <Sliders className="w-3.5 h-3.5 text-purple-400" />
+                  <Sliders className="w-3.5 h-3.5 text-[#2997ff]" />
                   <span>Number of Slices:</span>
                 </span>
-                <span className="font-mono font-bold text-purple-400 bg-zinc-800 px-2 py-0.5 rounded">
+                <span className="font-mono font-bold text-white bg-white/[0.1] px-2.5 py-0.5 rounded-full">
                   {slideCount} Slides
                 </span>
               </div>
@@ -208,9 +210,9 @@ export const CarouselSplitter: React.FC = () => {
                 step="1"
                 value={slideCount}
                 onChange={(e) => handleSlideCountChange(parseInt(e.target.value))}
-                className="w-full accent-purple-500 cursor-pointer"
+                className="w-full accent-[#2997ff] cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-zinc-500 font-mono">
+              <div className="flex justify-between text-[10px] text-[#86868b] font-mono">
                 <span>2 slides</span>
                 <span>5 slides</span>
                 <span>10 slides</span>
@@ -219,12 +221,12 @@ export const CarouselSplitter: React.FC = () => {
 
             {/* Horizontal Crop Offset Slider */}
             <div className="space-y-2">
-              <div className="flex justify-between text-xs text-zinc-300">
+              <div className="flex justify-between text-xs text-[#f5f5f7]">
                 <span className="flex items-center gap-1.5 font-medium">
-                  <MoveHorizontal className="w-3.5 h-3.5 text-purple-400" />
+                  <MoveHorizontal className="w-3.5 h-3.5 text-[#bf5af2]" />
                   <span>Horizontal Crop Shift:</span>
                 </span>
-                <span className="font-mono text-zinc-400">{horizontalOffset}%</span>
+                <span className="font-mono text-[#86868b]">{horizontalOffset}%</span>
               </div>
               <input
                 type="range"
@@ -233,9 +235,9 @@ export const CarouselSplitter: React.FC = () => {
                 step="1"
                 value={horizontalOffset}
                 onChange={(e) => handleOffsetChange(parseInt(e.target.value))}
-                className="w-full accent-purple-500 cursor-pointer"
+                className="w-full accent-[#bf5af2] cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-zinc-500 font-mono">
+              <div className="flex justify-between text-[10px] text-[#86868b] font-mono">
                 <span>Left Aligned</span>
                 <span>Center</span>
                 <span>Right Aligned</span>
