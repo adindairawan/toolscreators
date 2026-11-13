@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { Download, Grid, Layers } from 'lucide-react';
+import { Download, Grid, Layers, Sliders, MoveHorizontal, RotateCcw } from 'lucide-react';
 import JSZip from 'jszip';
 
-type AspectRatioMode = 'square' | 'portrait';
+type AspectRatioMode = 'portrait' | 'square';
 
 interface SlideSlice {
   index: number;
@@ -12,10 +12,13 @@ interface SlideSlice {
 export const CarouselSplitter: React.FC = () => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [aspectMode, setAspectMode] = useState<AspectRatioMode>('portrait');
+  const [slideCount, setSlideCount] = useState<number>(3);
+  const [horizontalOffset, setHorizontalOffset] = useState<number>(0); // 0 to 100%
   const [slices, setSlices] = useState<SlideSlice[]>([]);
   const [originalDimensions, setOriginalDimensions] = useState<{ width: number; height: number } | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const imageElementRef = useRef<HTMLImageElement | null>(null);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -25,59 +28,82 @@ export const CarouselSplitter: React.FC = () => {
     const url = URL.createObjectURL(file);
     img.src = url;
     img.onload = () => {
+      imageElementRef.current = img;
       setOriginalDimensions({ width: img.naturalWidth, height: img.naturalHeight });
       setImageSrc(url);
-      processSlices(img, aspectMode);
+
+      // Auto calculate initial slide count based on aspect ratio
+      const targetW = 1080;
+      const targetH = aspectMode === 'portrait' ? 1350 : 1080;
+      const targetRatioLocal = targetW / targetH;
+      const totalRatio = img.naturalWidth / img.naturalHeight;
+      const estimated = Math.min(10, Math.max(2, Math.round(totalRatio / targetRatioLocal)));
+
+      setSlideCount(estimated);
+      setHorizontalOffset(0);
+      generateSlices(img, estimated, aspectMode, 0);
     };
   };
 
-  const processSlices = (img: HTMLImageElement, mode: AspectRatioMode) => {
+  const generateSlices = (
+    img: HTMLImageElement,
+    count: number,
+    mode: AspectRatioMode,
+    offsetPercent: number
+  ) => {
     const targetW = 1080;
     const targetH = mode === 'portrait' ? 1350 : 1080;
-    const targetRatioLocal = targetW / targetH;
+    const targetRatio = targetW / targetH;
 
-    // How many slides fit into this image?
-    const totalRatio = img.naturalWidth / img.naturalHeight;
-    const estimatedSlides = Math.max(1, Math.round(totalRatio / targetRatioLocal));
+    // The total width of all slices in the source image
+    const idealTotalWidthInSource = img.naturalHeight * targetRatio * count;
+    const availableExtraWidth = Math.max(0, img.naturalWidth - idealTotalWidthInSource);
+    const startX = (availableExtraWidth * offsetPercent) / 100;
+    const sliceWidthInSource = Math.min(img.naturalWidth / count, img.naturalHeight * targetRatio);
 
-    const slideWidthInImage = img.naturalWidth / estimatedSlides;
-    const generatedSlices: SlideSlice[] = [];
+    const generated: SlideSlice[] = [];
 
-    for (let i = 0; i < estimatedSlides; i++) {
+    for (let i = 0; i < count; i++) {
       const canvas = document.createElement('canvas');
       canvas.width = targetW;
       canvas.height = targetH;
       const ctx = canvas.getContext('2d');
       if (!ctx) continue;
 
-      // Draw slice
-      ctx.drawImage(
-        img,
-        i * slideWidthInImage,
-        0,
-        slideWidthInImage,
-        img.naturalHeight,
-        0,
-        0,
-        targetW,
-        targetH
-      );
+      const sx = startX + i * sliceWidthInSource;
+      const sy = 0;
+      const sWidth = sliceWidthInSource;
+      const sHeight = img.naturalHeight;
 
-      generatedSlices.push({
+      ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, targetW, targetH);
+
+      generated.push({
         index: i + 1,
         dataUrl: canvas.toDataURL('image/jpeg', 0.95),
       });
     }
 
-    setSlices(generatedSlices);
+    setSlices(generated);
   };
 
   const handleModeChange = (mode: AspectRatioMode) => {
     setAspectMode(mode);
-    if (imageSrc) {
-      const img = new Image();
-      img.src = imageSrc;
-      img.onload = () => processSlices(img, mode);
+    if (imageElementRef.current) {
+      generateSlices(imageElementRef.current, slideCount, mode, horizontalOffset);
+    }
+  };
+
+  const handleSlideCountChange = (newCount: number) => {
+    setSlideCount(newCount);
+    if (imageElementRef.current) {
+      generateSlices(imageElementRef.current, newCount, aspectMode, horizontalOffset);
+    }
+  };
+
+  const handleOffsetChange = (newOffset: number) => {
+    setHorizontalOffset(newOffset);
+    if (imageElementRef.current) {
+      generateSlices(imageElementRef.current, slideCount, aspectMode, newOffset);
     }
   };
 
@@ -94,29 +120,29 @@ export const CarouselSplitter: React.FC = () => {
     const url = URL.createObjectURL(content);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `carousel-slides-${slices.length}-pack.zip`;
+    a.download = `carousel-${slices.length}-slides.zip`;
     a.click();
   };
 
   return (
     <div className="space-y-6">
-      {/* Controls Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl">
+      {/* Top Controls Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-2xl">
         <div className="flex items-center gap-2">
           <span className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mr-1">Target Format:</span>
           <button
             onClick={() => handleModeChange('portrait')}
-            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
+            className={`px-3 py-1.5 text-xs font-medium rounded-xl transition-all ${
               aspectMode === 'portrait'
                 ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30'
                 : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700'
             }`}
           >
-            4:5 Portrait (1080×1350) — Recommended
+            4:5 Portrait (1080×1350)
           </button>
           <button
             onClick={() => handleModeChange('square')}
-            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
+            className={`px-3 py-1.5 text-xs font-medium rounded-xl transition-all ${
               aspectMode === 'square'
                 ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30'
                 : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700'
@@ -129,7 +155,7 @@ export const CarouselSplitter: React.FC = () => {
         {slices.length > 0 && (
           <button
             onClick={downloadAllAsZip}
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-lg text-xs font-medium shadow-lg shadow-purple-600/25 transition-all"
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-xl text-xs font-medium shadow-lg shadow-purple-600/25 transition-all"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Download All ({slices.length} Slides ZIP)</span>
@@ -140,17 +166,17 @@ export const CarouselSplitter: React.FC = () => {
       {!imageSrc ? (
         <div
           onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-zinc-800 hover:border-purple-500/50 rounded-2xl p-16 flex flex-col items-center justify-center text-center cursor-pointer bg-zinc-900/30 hover:bg-zinc-900/60 transition-all"
+          className="border-2 border-dashed border-zinc-800 hover:border-purple-500/50 rounded-3xl p-16 flex flex-col items-center justify-center text-center cursor-pointer bg-zinc-900/30 hover:bg-zinc-900/60 transition-all"
         >
           <div className="p-4 bg-purple-600/10 text-purple-400 rounded-2xl mb-4">
             <Layers className="w-10 h-10" />
           </div>
-          <h3 className="text-base font-semibold text-zinc-200">Upload Seamless Panorama or Banner</h3>
+          <h3 className="text-base font-semibold text-zinc-200">Upload Panoramic Banner or Infographic</h3>
           <p className="text-xs text-zinc-400 max-w-md mt-1.5 leading-relaxed">
-            Drop an ultrawide canvas (e.g. 3240×1080 for 3 slides, or 5400×1350 for 5 slides). We will automatically split it into pixel-perfect seamless swipable cards.
+            Drop your wide canvas (e.g. 3240×1080 or 5400×1350). We will split it into seamless, swipable Instagram/LinkedIn cards with zero compression or watermarks.
           </p>
-          <span className="mt-4 px-3 py-1 text-[11px] bg-zinc-800 text-zinc-300 rounded-md">
-            100% Client-Side • Instant • No Loss of Quality
+          <span className="mt-4 px-3 py-1 text-[11px] bg-zinc-800 text-zinc-300 rounded-full">
+            100% Client-Side • Instant ZIP Export
           </span>
           <input
             ref={fileInputRef}
@@ -162,25 +188,81 @@ export const CarouselSplitter: React.FC = () => {
         </div>
       ) : (
         <div className="space-y-6">
-          {/* Slices Preview Grid */}
-          <div className="p-6 bg-zinc-900/60 border border-zinc-800 rounded-2xl">
+          {/* Sliders Control Panel */}
+          <div className="p-5 bg-zinc-900/80 border border-zinc-800 rounded-2xl grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Slide Count Slider (2 to 10) */}
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs text-zinc-300">
+                <span className="flex items-center gap-1.5 font-medium">
+                  <Sliders className="w-3.5 h-3.5 text-purple-400" />
+                  <span>Number of Slices:</span>
+                </span>
+                <span className="font-mono font-bold text-purple-400 bg-zinc-800 px-2 py-0.5 rounded">
+                  {slideCount} Slides
+                </span>
+              </div>
+              <input
+                type="range"
+                min="2"
+                max="10"
+                step="1"
+                value={slideCount}
+                onChange={(e) => handleSlideCountChange(parseInt(e.target.value))}
+                className="w-full accent-purple-500 cursor-pointer"
+              />
+              <div className="flex justify-between text-[10px] text-zinc-500 font-mono">
+                <span>2 slides</span>
+                <span>5 slides</span>
+                <span>10 slides</span>
+              </div>
+            </div>
+
+            {/* Horizontal Crop Offset Slider */}
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs text-zinc-300">
+                <span className="flex items-center gap-1.5 font-medium">
+                  <MoveHorizontal className="w-3.5 h-3.5 text-purple-400" />
+                  <span>Horizontal Crop Shift:</span>
+                </span>
+                <span className="font-mono text-zinc-400">{horizontalOffset}%</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                step="1"
+                value={horizontalOffset}
+                onChange={(e) => handleOffsetChange(parseInt(e.target.value))}
+                className="w-full accent-purple-500 cursor-pointer"
+              />
+              <div className="flex justify-between text-[10px] text-zinc-500 font-mono">
+                <span>Left Aligned</span>
+                <span>Center</span>
+                <span>Right Aligned</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Generated Slices Grid */}
+          <div className="p-6 bg-zinc-900/60 border border-zinc-800 rounded-3xl">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Grid className="w-4 h-4 text-purple-400" />
                 <h3 className="text-sm font-semibold text-zinc-200">
-                  Generated {slices.length} Seamless Slides
+                  {slices.length} Seamless Slide Previews
                 </h3>
                 {originalDimensions && (
                   <span className="text-[11px] font-mono text-zinc-500">
-                    (Source: {originalDimensions.width}×{originalDimensions.height}px)
+                    ({originalDimensions.width}×{originalDimensions.height}px Source)
                   </span>
                 )}
               </div>
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="text-xs text-purple-400 hover:text-purple-300 transition-colors"
+                className="text-xs text-purple-400 hover:text-purple-300 flex items-center gap-1 transition-colors"
               >
-                Upload different image
+                <RotateCcw className="w-3 h-3" />
+                <span>Upload New Image</span>
               </button>
             </div>
 
@@ -188,15 +270,15 @@ export const CarouselSplitter: React.FC = () => {
               {slices.map((slice) => (
                 <div
                   key={slice.index}
-                  className="group relative bg-zinc-950 rounded-xl overflow-hidden border border-zinc-800 shadow-md"
+                  className="group relative bg-zinc-950 rounded-2xl overflow-hidden border border-zinc-800 shadow-lg"
                 >
                   <img
                     src={slice.dataUrl}
                     alt={`Slide ${slice.index}`}
                     className="w-full h-auto object-cover"
                   />
-                  <div className="absolute top-2 left-2 px-2 py-0.5 bg-black/70 backdrop-blur text-[10px] font-mono rounded text-zinc-200">
-                    #{slice.index}
+                  <div className="absolute top-2 left-2 px-2 py-0.5 bg-black/75 backdrop-blur text-[10px] font-mono rounded text-zinc-200">
+                    Slide {slice.index}
                   </div>
                   <a
                     href={slice.dataUrl}
