@@ -1,5 +1,7 @@
 # Creator & Social Tools — Project Blueprint & SEO Strategy
 
+Page: adindairawan.github.io/toolscreators
+
 An ad-free, 100% client-side micro-tool suite designed for video creators, social media managers, and video editors to solve common platform friction points without popups, paywalls, or server uploads.
 
 ---
