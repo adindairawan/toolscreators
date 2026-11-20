@@ -47,6 +47,13 @@ export const HomePage: React.FC = () => {
             <ChevronRight className="w-4 h-4" />
           </a>
           <Link
+            to="/story-safe-zone"
+            className="apple-pill-secondary inline-flex items-center gap-1.5 border-[#30d158]/30 hover:border-[#30d158]/60"
+          >
+            <span className="text-[#30d158] font-semibold">Story Safe Zone</span>
+            <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-[#30d158]/20 text-[#30d158] font-bold">NEW</span>
+          </Link>
+          <Link
             to="/tiktok-safe-zone"
             className="apple-pill-secondary inline-flex items-center gap-1.5"
           >
@@ -105,16 +112,23 @@ export const HomePage: React.FC = () => {
 
               <div className="mt-8 flex flex-wrap gap-2 text-xs">
                 <Link
-                  to="/tiktok-safe-zone"
-                  className="px-3 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] text-[#f5f5f7] border border-white/[0.08] transition-colors"
+                  to="/story-safe-zone"
+                  className="px-3 py-1.5 rounded-full bg-[#30d158]/10 hover:bg-[#30d158]/20 text-[#30d158] border border-[#30d158]/30 transition-colors flex items-center gap-1 font-medium"
                 >
-                  TikTok Guides
+                  <span>Instagram Story</span>
+                  <span className="text-[9px] uppercase px-1 py-0.2 rounded bg-[#30d158]/20 font-bold">New</span>
                 </Link>
                 <Link
                   to="/reels-safe-zone"
                   className="px-3 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] text-[#f5f5f7] border border-white/[0.08] transition-colors"
                 >
                   Instagram Reels
+                </Link>
+                <Link
+                  to="/tiktok-safe-zone"
+                  className="px-3 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] text-[#f5f5f7] border border-white/[0.08] transition-colors"
+                >
+                  TikTok Guides
                 </Link>
                 <Link
                   to="/shorts-safe-zone"
@@ -155,13 +169,13 @@ export const HomePage: React.FC = () => {
                 <Layers className="w-5 h-5 text-[#2997ff]" />
               </div>
               <span className="text-[11px] font-semibold tracking-wider uppercase text-[#2997ff]">
-                Seamless Canvas
+                Seamless Canvas & Story Slices
               </span>
               <h3 className="text-xl sm:text-2xl font-semibold text-[#f5f5f7] mt-1 tracking-tight">
-                Panoramic Carousel Splitter.
+                Panoramic Carousel & Story Splitter.
               </h3>
               <p className="text-xs sm:text-sm text-[#86868b] mt-3 leading-relaxed">
-                Transform wide panoramic infographics into seamless swipable cards for Instagram & LinkedIn. Supports 4:5 portrait & 1:1 square.
+                Transform wide panoramic infographics into seamless swipable cards or vertical Story collections (9:16). Supports 9:16 Story, 4:5 portrait & 1:1 square.
               </p>
             </div>
 

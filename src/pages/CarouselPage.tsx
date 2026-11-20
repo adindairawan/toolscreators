@@ -24,7 +24,7 @@ export const CarouselPage: React.FC = () => {
         </h1>
 
         <p className="mt-4 text-base sm:text-lg text-[#86868b] leading-relaxed max-w-2xl mx-auto font-normal">
-          Upload any wide panoramic graphic or continuous infographic. Our client-side canvas engine slices it into seamless 1080×1350 (4:5) or 1080×1080 (1:1) cards with 1-click ZIP export.
+          Upload any wide panoramic graphic or continuous infographic. Our client-side canvas engine slices it into seamless 9:16 Story Collections (1080×1920), 4:5 Feed Carousels (1080×1350), or 1:1 Squares with 1-click ZIP export.
         </p>
 
         <div className="mt-6 flex items-center justify-center gap-2 text-[11px] text-[#30d158] bg-white/[0.04] border border-white/[0.08] px-3.5 py-1.5 rounded-full w-fit mx-auto">

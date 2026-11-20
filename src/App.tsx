@@ -16,6 +16,9 @@ export const App: React.FC = () => {
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/story-safe-zone" element={<SafeZonePage platform="story" />} />
+            <Route path="/stories-safe-zone" element={<SafeZonePage platform="story" />} />
+            <Route path="/instagram-story" element={<SafeZonePage platform="story" />} />
             <Route path="/tiktok-safe-zone" element={<SafeZonePage platform="tiktok" />} />
             <Route path="/reels-safe-zone" element={<SafeZonePage platform="reels" />} />
             <Route path="/shorts-safe-zone" element={<SafeZonePage platform="shorts" />} />

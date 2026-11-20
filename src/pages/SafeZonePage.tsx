@@ -16,6 +16,13 @@ const METAS: Record<Platform, { title: string; desc: string; keywords: string; e
     eyebrow: 'TikTok FYP Safe Zone',
     h1: 'TikTok Safe Zone Studio.',
   },
+  story: {
+    title: 'Instagram Story Safe Zone Checker & Template (1080x1920)',
+    desc: 'Free client-side Instagram Story Safe Zone checker. Prevent top progress segment bars, username header, and bottom Send Message reply pills from covering your text or stickers.',
+    keywords: 'instagram story safe zone, instagram story template 1080x1920, story safe area dimensions, story safe margin png capcut',
+    eyebrow: 'Instagram Story & Highlights',
+    h1: 'Instagram Story Studio.',
+  },
   reels: {
     title: 'Instagram Reels Safe Zone Overlay & Previewer (9:16)',
     desc: 'Ensure your captions, face, and CTAs are never blocked by Instagram Reels buttons, header, or audio info. Instant client-side video preview and transparent overlay PNG export.',
@@ -85,22 +92,40 @@ export const SafeZonePage: React.FC<SafeZonePageProps> = ({ platform }) => {
               The Danger Margins
             </h3>
             <p>
-              When viewers watch on {platform === 'tiktok' ? 'TikTok' : platform === 'reels' ? 'Instagram Reels' : 'YouTube Shorts'}, the native application overlays interactive elements across the video viewport:
+              When viewers watch on {platform === 'tiktok' ? 'TikTok' : platform === 'story' ? 'Instagram Stories' : platform === 'reels' ? 'Instagram Reels' : 'YouTube Shorts'}, the native application overlays interactive elements across the video viewport:
             </p>
-            <ul className="space-y-2 text-[#f5f5f7] font-sans">
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#ff9f0a] mt-1.5 shrink-0" />
-                <span><strong>Top Header (120–160px):</strong> Live indicator, search icon, and FYP/Following navigation bar.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#ff9f0a] mt-1.5 shrink-0" />
-                <span><strong>Right Side Rail (140–160px):</strong> Profile badge, like, comment, bookmark, and share controls.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#ff9f0a] mt-1.5 shrink-0" />
-                <span><strong>Bottom Drawer (320–400px):</strong> Creator handle, expandable caption drawer, sound ticker, and progress scrubber.</span>
-              </li>
-            </ul>
+
+            {platform === 'story' ? (
+              <ul className="space-y-2 text-[#f5f5f7] font-sans">
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#ff9f0a] mt-1.5 shrink-0" />
+                  <span><strong>Top Segment Bars & Header (250px):</strong> Story progress dashes, account avatar, timestamp, and close button. Never place titles or stickers here.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#ff9f0a] mt-1.5 shrink-0" />
+                  <span><strong>Bottom Reply Pill (280px):</strong> Floating "Send message" text input, heart reaction, and share paper plane.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#ff9f0a] mt-1.5 shrink-0" />
+                  <span><strong>Left & Right Tap Navigation Zones (65px):</strong> Tapping the screen edges advances or rewinds stories; avoid interactive poll stickers or links on screen edges.</span>
+                </li>
+              </ul>
+            ) : (
+              <ul className="space-y-2 text-[#f5f5f7] font-sans">
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#ff9f0a] mt-1.5 shrink-0" />
+                  <span><strong>Top Header (120–160px):</strong> Live indicator, search icon, and FYP/Following navigation bar.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#ff9f0a] mt-1.5 shrink-0" />
+                  <span><strong>Right Side Rail (140–160px):</strong> Profile badge, like, comment, bookmark, and share controls.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#ff9f0a] mt-1.5 shrink-0" />
+                  <span><strong>Bottom Drawer (320–400px):</strong> Creator handle, expandable caption drawer, sound ticker, and progress scrubber.</span>
+                </li>
+              </ul>
+            )}
           </div>
 
           <div className="space-y-4 p-6 bg-white/[0.02] border border-white/[0.06] rounded-2xl">
@@ -111,7 +136,7 @@ export const SafeZonePage: React.FC<SafeZonePageProps> = ({ platform }) => {
             <ul className="space-y-2 text-[#f5f5f7] font-sans">
               <li className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#30d158] mt-1.5 shrink-0" />
-                <span>Keep all primary subtitles, title cards, and callouts centered inside the inner green safe rectangle.</span>
+                <span>Keep all primary subtitles, title cards, and callouts centered inside the inner safe rectangle.</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#30d158] mt-1.5 shrink-0" />

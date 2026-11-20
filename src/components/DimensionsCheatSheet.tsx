@@ -83,6 +83,12 @@ export const DimensionsCheatSheet: React.FC = () => {
             </thead>
             <tbody className="divide-y divide-white/[0.06] font-mono">
               <tr>
+                <td className="py-4 text-[#f5f5f7] font-sans font-medium">Instagram Story & Highlights</td>
+                <td className="py-4">9:16</td>
+                <td className="py-4">1080 × 1920 px</td>
+                <td className="py-4 text-[#ffd60a]">Top 250px (bars/header) • Sides 65px • Bottom 280px</td>
+              </tr>
+              <tr>
                 <td className="py-4 text-[#f5f5f7] font-sans font-medium">TikTok (For You Page)</td>
                 <td className="py-4">9:16</td>
                 <td className="py-4">1080 × 1920 px</td>
